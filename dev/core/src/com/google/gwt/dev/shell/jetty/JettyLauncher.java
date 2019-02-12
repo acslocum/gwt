@@ -889,32 +889,6 @@ public class JettyLauncher extends ServletContainerLauncher {
     ImageIO.getCacheDirectory();
 
     /*
-     * Several components end up calling: sun.misc.GC.requestLatency(long)
-     *
-     * Those libraries / components known to trigger memory leaks due to
-     * eventual calls to requestLatency(long) are: -
-     * javax.management.remote.rmi.RMIConnectorServer.start()
-     */
-    try {
-      Class<?> clazz = Class.forName("sun.misc.GC");
-      Method method = clazz.getDeclaredMethod("requestLatency",
-          new Class[]{long.class});
-      method.invoke(null, Long.valueOf(3600000));
-    } catch (ClassNotFoundException e) {
-      logger.log(TreeLogger.ERROR, "jreLeakPrevention.gcDaemonFail", e);
-    } catch (SecurityException e) {
-      logger.log(TreeLogger.ERROR, "jreLeakPrevention.gcDaemonFail", e);
-    } catch (NoSuchMethodException e) {
-      logger.log(TreeLogger.ERROR, "jreLeakPrevention.gcDaemonFail", e);
-    } catch (IllegalArgumentException e) {
-      logger.log(TreeLogger.ERROR, "jreLeakPrevention.gcDaemonFail", e);
-    } catch (IllegalAccessException e) {
-      logger.log(TreeLogger.ERROR, "jreLeakPrevention.gcDaemonFail", e);
-    } catch (InvocationTargetException e) {
-      logger.log(TreeLogger.ERROR, "jreLeakPrevention.gcDaemonFail", e);
-    }
-
-    /*
      * Calling getPolicy retains a static reference to the context class loader.
      */
     try {
