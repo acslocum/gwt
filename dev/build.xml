@@ -68,60 +68,6 @@
 
   <target name="build.alldeps.jar" description="Merges all dependency jars into a single jar">
     <mkdir dir="${project.build}"/>
-    <outofdate> <!-- saves rescanning all the source jars' contents -->
-      <sourcefiles>
-        <fileset dir="${gwt.tools.lib}">
-          <include name="apache/tapestry-util-text-4.0.2.jar"/>
-          <include name="apache/ant-1.6.5.jar"/>
-          <include name="colt/colt-1.2.jar"/>
-          <include name="eclipse/org.eclipse.jdt.core_3.13.102-CUSTOM-GWT-20180415.jar"/>
-          <include name="eclipse/jdtCompilerAdapter_3.13.102-CUSTOM-GWT-20180415.jar"/>
-          <include name="objectweb/asm-6.1.1/asm-6.1.1.jar"/>
-          <include name="objectweb/asm-6.1.1/asm-commons-6.1.1.jar"/>
-          <include name="objectweb/asm-6.1.1/asm-util-6.1.1.jar"/>
-          <include name="guava/guava-19.0/guava-19.0-rebased.jar"/>
-          <include name="icu4j/63.1/icu4j.jar"/>
-          <include name="jetty/jetty-9.2.14.v20151106/jetty-all-9.2.14.v20151106.jar"/>
-          <include name="gson/gson-2.6.2.jar"/>
-          <include name="jscomp/20160315/sourcemap-rebased.jar"/>
-          <include name="jsr305/jsr305.jar"/>
-          <include name="protobuf/protobuf-2.5.0/protobuf-java-rebased-2.5.0.jar"/>
-          <!-- dependencies needed for JSP support in DevMode: BEGIN -->
-          <include name="jetty/jetty-9.2.14.v20151106/mortbay-apache-jsp-8.0.9.M3.jar"/>
-          <include name="jetty/jetty-9.2.14.v20151106/mortbay-apache-el-8.0.9.M3.jar"/>
-          <include name="jetty/jetty-9.2.14.v20151106/jetty-apache-jsp-9.2.14.v20151106.jar"/>
-          <!-- dependencies needed for JSP support in DevMode: END -->
-          <include name="tomcat/tomcat-servlet-api-8.0.28.jar"/>
-          <include name="tomcat/tomcat-websocket-api-8.0.28.jar"/>
-          <include name="tomcat/tomcat-annotations-api-8.0.28.jar"/>
-          <include name="apache/commons/commons-collections-3.2.2.jar"/>
-          <!-- htmlunit dependencies not already included: BEGIN -->
-          <include name="apache/http/httpclient-4.5.1.jar"/>
-          <include name="apache/http/httpcore-4.4.4.jar"/>
-          <include name="apache/http/httpmime-4.5.1.jar"/>
-          <include name="apache/james/apache-mime4j-0.6.jar"/>
-          <include name="apache/commons/commons-codec-1.10.jar"/>
-          <include name="apache/commons/commons-io-2.4.jar"/>
-          <include name="apache/commons/commons-lang3-3.4.jar"/>
-          <include name="apache/commons/commons-logging-1.2.jar"/>
-          <include name="cssparser/cssparser-0.9.18.jar"/>
-         <include name="htmlunit/htmlunit-2.19/htmlunit-2.19.jar"/>
-         <include name="htmlunit/htmlunit-2.19/htmlunit-core-js-2.15.jar"/>
-          <include name="nekohtml/nekohtml-1.9.22.jar"/>
-          <include name="cup/java-cup-11a.jar"/>
-          <include name="xalan/xalan-2.7.1-nocup.jar"/>
-          <include name="xerces/xerces-2_11_0/serializer-2.7.1.jar"/>
-          <include name="xerces/xerces-2_11_0/xercesImpl-2.11.0.jar"/>
-          <include name="xerces/xerces-2_11_0/xml-apis-1.4.01.jar"/>
-          <include name="w3c/sac/sac-1.3.jar"/>
-          <!-- htmlunit dependencies not already included: END -->
-          <include name="json/android-sdk-19.1/json-android-rebased.jar"/>
-        </fileset>
-        <fileset file="build.xml"/>
-      </sourcefiles>
-      <targetfiles>
-        <fileset file="${alldeps.jar}"/>
-      </targetfiles>
       <sequential>
         <gwt.jar destfile="${alldeps.jar}" duplicate="preserve">
           <service type="javax.servlet.ServletContainerInitializer">
@@ -181,7 +127,6 @@
           <zipfileset src="${gwt.tools.lib}/json/android-sdk-19.1/json-android-rebased.jar"/>
         </gwt.jar>
       </sequential>
-    </outofdate>
   </target>
 
   <property name="filter.pattern" value="com/google/gwt/dev/About.properties"/>
@@ -346,21 +291,6 @@
 
   <target name="build" depends="compile" description="Build and package this project">
     <mkdir dir="${gwt.build.lib}"/>
-    <outofdate>
-      <sourcefiles>
-        <fileset dir="core/src">
-          <exclude name="**/package.html"/>
-          <exclude name="**/*.properties"/> <!-- copied and/or filtered into bin -->
-          <exclude name="org/apache/COPYING"/> <!-- already in alldeps.jar -->
-        </fileset>
-        <fileset dir="core/super" excludes="**/package.html"/>
-        <fileset dir="${javac.out}"/>
-        <fileset dir="${project.build}/bin"/>
-        <fileset file="${project.build}/alldeps.jar"/>
-      </sourcefiles>
-      <targetfiles>
-        <fileset file="${project.lib}"/>
-      </targetfiles>
       <sequential>
         <gwt.jar>
           <fileset dir="core/src">
@@ -377,7 +307,6 @@
           </manifest>
         </gwt.jar>
       </sequential>
-    </outofdate>
   </target>
 </project>
 
